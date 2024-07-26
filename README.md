@@ -5,11 +5,11 @@ Official Implementation
 
 ### 示意图 / diagram
 <p align="center">
-   <img src="./assets/diagram.png" width="75%">
+   <img src="./assets/diagram.png" width="100%">
 </p>
 
 
 ### 用法 / usage
 <p align="center">
-   <img src="./assets/usage.png" width="75%">
+   <img src="./assets/usage.png" width="100%">
 </p>
