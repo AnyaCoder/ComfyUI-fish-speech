@@ -216,19 +216,7 @@ class Prompt2Semantic:
         iterative_prompt: str,
         chunk_length: int,
     ):
-        print(
-            device,
-            text,
-            prompt_text,
-            max_new_tokens,
-            top_p,
-            repetition_penalty,
-            temperature,
-            compile,
-            seed,
-            iterative_prompt,
-            chunk_length,
-        )
+
         return prompt2semantic(
             llama,
             decode_func,
