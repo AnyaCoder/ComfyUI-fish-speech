@@ -1,12 +1,10 @@
-import hashlib
+
 import hydra
 from hydra import compose, initialize
 from hydra.utils import instantiate
 import torch
 from loguru import logger
 import torchaudio
-import soundfile as sf
-import numpy as np
 
 
 def load_model(config_name, checkpoint_path, device="cuda"):
@@ -48,14 +46,15 @@ def codes2audio(model, indices, device):
     )
 
     # Save audio
-    fake_audio = fake_audios[0, 0].cpu()
+    fake_audio = fake_audios[0, 0]
 
     # to tensor
     waveform = fake_audio.unsqueeze(0)
 
     sample_rate = model.spec_transform.sample_rate
 
-    audio_content = {"waveform": (waveform, ), "sample_rate": sample_rate}
+    audio_content = {"waveform": waveform.unsqueeze(0), "sample_rate": sample_rate}
+    
     return audio_content
 
 
