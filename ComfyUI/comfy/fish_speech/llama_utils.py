@@ -40,7 +40,7 @@ def prompt2semantic(
     prompt_text: Optional[list[str]],
     prompt_tokens: Optional[list[np.ndarray]],
     max_new_tokens: int,
-    top_p: int,
+    top_p: float,
     repetition_penalty: float,
     temperature: float,
     device: str,

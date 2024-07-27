@@ -95,6 +95,10 @@ class LoadLLAMA:
         compile=True if compile == "yes" else False
         if self.llama is None or self.decode_func is None:
             self.llama, self.decode_func = load_llama_model(model, device, precision, compile)
+            prompt2semantic(self.llama, self.decode_func, 
+                            "Warm up sentence!", None, None, 
+                            0, 0.7, 1.2, 0.7, 
+                            device, compile, 42, True, 100)
         return (self.llama, self.decode_func, )
 
 
@@ -208,7 +212,7 @@ class Prompt2Semantic:
         prompt_text: str,
         prompt_tokens,
         max_new_tokens: int,
-        top_p: int,
+        top_p: float,
         repetition_penalty: float,
         temperature: float,
         compile: str,
