@@ -54,7 +54,7 @@ def codes2audio(model, indices, device):
     sample_rate = model.spec_transform.sample_rate
 
     audio_content = {"waveform": waveform.unsqueeze(0), "sample_rate": sample_rate}
-    
+
     return audio_content
 
 

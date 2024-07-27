@@ -14,6 +14,7 @@ CONFIGS_FOLDER = (Path("ComfyUI") / "models" / "fish_speech" / "configs")
 
 class LoadVQGAN:
     def __init__(self):
+        self.vqgan = None
         pass
     
     @classmethod
@@ -47,13 +48,16 @@ class LoadVQGAN:
     def load_vqgan(self, config, model, device):
         config = config.rsplit(".", 1)[0]
         model = str(CKPTS_FOLDER / model)
-        vqgan = load_vqgan_model(config, model, device=device)
-        return (vqgan, )
+        if self.vqgan is None:
+            self.vqgan = load_vqgan_model(config, model, device=device)
+        return (self.vqgan, )
 
 
 
 class LoadLLAMA:
     def __init__(self):
+        self.llama = None
+        self.decode_func = None
         pass
     
     @classmethod
@@ -89,8 +93,9 @@ class LoadLLAMA:
         model = str((CKPTS_FOLDER / model).resolve())
         precision = torch.bfloat16 if precision == "bf16" else torch.half
         compile=True if compile == "yes" else False
-        llama, decode_func = load_llama_model(model, device, precision, compile)
-        return (llama, decode_func, )
+        if self.llama is None or self.decode_func is None:
+            self.llama, self.decode_func = load_llama_model(model, device, precision, compile)
+        return (self.llama, self.decode_func, )
 
 
 class AudioToPrompt:
@@ -211,6 +216,19 @@ class Prompt2Semantic:
         iterative_prompt: str,
         chunk_length: int,
     ):
+        print(
+            device,
+            text,
+            prompt_text,
+            max_new_tokens,
+            top_p,
+            repetition_penalty,
+            temperature,
+            compile,
+            seed,
+            iterative_prompt,
+            chunk_length,
+        )
         return prompt2semantic(
             llama,
             decode_func,
